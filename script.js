@@ -18,6 +18,8 @@ function handleFormSubmit(event) {
     displayPosts(); // Display the updated post list
 
     document.getElementById('post-content').value = ''; // Clear the input field
+
+    savePosts(); // Save the posts to localStorage
   }
 }
 
@@ -37,9 +39,24 @@ function displayPosts() {
   }
 }
 
+// Function to save the posts to localStorage
+function savePosts() {
+  localStorage.setItem('posts', JSON.stringify(posts));
+}
+
+// Function to load the posts from localStorage
+function loadPosts() {
+  var savedPosts = localStorage.getItem('posts');
+
+  if (savedPosts) {
+    posts = JSON.parse(savedPosts);
+    displayPosts();
+  }
+}
+
 // Add event listener to the form submission
 var form = document.getElementById('post-form');
 form.addEventListener('submit', handleFormSubmit);
 
-// Initial display of posts
-displayPosts();
+// Load posts on page load
+loadPosts();
